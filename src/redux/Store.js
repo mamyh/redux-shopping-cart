@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
 import myLogger from "./middleware/MyLogger";
-import ProductReducer from "./shopping-cart/ProducReducer";
+import RootReducer from "./RootReducer";
 
-const store = createStore(ProductReducer,applyMiddleware(myLogger));
+const store = createStore(RootReducer,applyMiddleware(myLogger));
 
 export default store;

@@ -15,4 +15,4 @@ const CartReducer = (state=initialCarts,{type,payload}) => {
    }
 }
 
-export default CartReducer
+export default CartReducer;

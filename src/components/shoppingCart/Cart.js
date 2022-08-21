@@ -1,17 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux/es/exports';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { positiveNumber } from '../../lib/library';
 
-const Cart = ({id,add,remove}) => {
-    const carts = useSelector(state=>state);
-   
-      const{name,carts}= 
+const Cart = ({}) => {
+    const carts = useSelector(state=>state.CartReducer);
+    const dispatch = useDispatch()
+      const{productName,quantity}= carts
     
    
   return ( 
     <div className="flex justify-between border-b-2 mb-2">
     <div className="text-lg py-2">
-        <p>{name}</p>
+        <p>{productName}</p>
     </div>
     <div className="text-lg py-2">
         <div
@@ -35,7 +35,7 @@ const Cart = ({id,add,remove}) => {
                     />
                 </svg>
             </button>
-            <p>{positiveNumber(carts)}</p>
+            <p>{positiveNumber(quantity)}</p>
             <button
                 className="focus:outline-none bg-purple-700 hover:bg-purple-800 text-white font-bold py-1 px-1 rounded-full inline-flex items-center" onClick={()=>add(id)}
             >
