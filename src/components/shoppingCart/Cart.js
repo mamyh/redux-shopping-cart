@@ -1,12 +1,27 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { positiveNumber } from '../../lib/library';
+import { addToProducts, removeProducts } from '../../redux/products/Actions';
+import { addProductsToCart, removeProductsToCart } from '../../redux/shopping-cart/Actions';
 
-const Cart = ({}) => {
+const Cart = ({cartId}) => {
     const carts = useSelector(state=>state.CartReducer);
-    const dispatch = useDispatch()
-      const{productName,quantity}= carts
+    const cart = carts.find(item=>item.id === cartId);
+    const products = useSelector(state=>state.ProductReducer);
+    const dispatch = useDispatch();
+      const{id,productName,quantity}= cart;
     
+      const removeFromCarts=(id)=>{
+       const product =products.find(item=>item.id === id)||{id}
+       dispatch(removeProductsToCart(product))
+       dispatch(addToProducts(id))
+    }
+
+    const addProduct=(id)=>{
+        const product =products.find(item=>item.id === id)||{id}
+        dispatch(addProductsToCart(product))
+        dispatch(removeProducts);
+    }
    
   return ( 
     <div className="flex justify-between border-b-2 mb-2">
@@ -18,7 +33,7 @@ const Cart = ({}) => {
             className="flex flex-row space-x-2 w-full items-center rounded-lg"
         >
             <button
-                className="focus:outline-none bg-purple-700 hover:bg-purple-800 text-white font-bold py-1 px-1 rounded-full inline-flex items-center" onClick={()=>remove(id)}
+                className="focus:outline-none bg-purple-700 hover:bg-purple-800 text-white font-bold py-1 px-1 rounded-full inline-flex items-center" onClick={()=>removeFromCarts(id)}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +52,7 @@ const Cart = ({}) => {
             </button>
             <p>{positiveNumber(quantity)}</p>
             <button
-                className="focus:outline-none bg-purple-700 hover:bg-purple-800 text-white font-bold py-1 px-1 rounded-full inline-flex items-center" onClick={()=>add(id)}
+                className="focus:outline-none bg-purple-700 hover:bg-purple-800 text-white font-bold py-1 px-1 rounded-full inline-flex items-center" onClick={()=>addProduct(id)}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -61,4 +76,4 @@ const Cart = ({}) => {
   )
 }
 
-export default Cart
+export default Cart;

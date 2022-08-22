@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux/es/exports';
 import { numberWithCommas } from '../../../lib/library';
-import { addToProducts } from '../../../redux/products/Actions';
+import { removeProducts } from '../../../redux/products/Actions';
 import { addProductsToCart } from '../../../redux/shopping-cart/Actions';
 
 const Product = ({product}) => {
   const dispatch =useDispatch();
   const {productName,price,quantity} = product;
+  
   const addProductHandler=(product)=>{
-    dispatch(addToProducts(product.id));
+    dispatch(removeProducts(product.id));
     dispatch(addProductsToCart(product));
   }
   return (

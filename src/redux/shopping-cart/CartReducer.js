@@ -4,11 +4,48 @@ const initialCarts =[]
 const CartReducer = (state=initialCarts,{type,payload}) => {
    switch(type){
       case ADDPRODUCTSTOCART:{
-        return[...state,state.includes(payload) === -1? payload: state.find(item=>item.id===payload.id).quantity +1]
+        if(state.length){
+           state.map(item=>{
+            if(item.id === payload.id){
+              return {
+                ...item,
+                price:item.price+payload.price,
+                quantity:item.quantity +1,
+              }
+            }
+            return {
+              ...item
+            }
+           })
+        }else{
+         return  [
+            ...payload,
+          ]
+        }
+        return ;
       }
       case REMOVEPRODUCTSTOCART:{
-            return[...state,state.find(item=>item.id ===payload.id).quantity - 1]
+        if(state.length){
+          state.map(item=>{
+           if(item.id === payload.id){
+             return {
+               ...item,
+               price:item.price-payload.price,
+               quantity:item.quantity - 1,
+             }
+           }
+           return {
+             ...item
+           }
+          })
+       }else{
+        return  [
+           {id:payload.id,productName:payload.productName,quantity:0,price:0}
+         ]
+       }
+       return;
       }
+    
       default:{
         return [...state];
       }
