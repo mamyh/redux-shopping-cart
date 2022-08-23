@@ -5,9 +5,10 @@ import { addToProducts, removeProducts } from '../../redux/products/Actions';
 import { addProductsToCart, removeProductsToCart } from '../../redux/shopping-cart/Actions';
 
 const Cart = ({cartId}) => {
-    const carts = useSelector(state=>state.CartReducer);
+    const carts = useSelector(state=>state.CartReducer.carts);
+    
     const cart = carts.find(item=>item.id === cartId);
-    const products = useSelector(state=>state.ProductReducer);
+    const products = useSelector(state=>state.ProductReducer.products);
     const dispatch = useDispatch();
       const{id,productName,quantity}= cart;
     
@@ -20,7 +21,7 @@ const Cart = ({cartId}) => {
     const addProduct=(id)=>{
         const product =products.find(item=>item.id === id)||{id}
         dispatch(addProductsToCart(product))
-        dispatch(removeProducts);
+        dispatch(removeProducts(id));
     }
    
   return ( 

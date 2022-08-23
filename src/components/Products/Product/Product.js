@@ -18,7 +18,7 @@ const Product = ({product}) => {
                     >
                         <div className="flex justify-between px-4 items-center">
                             <div className="text-lg font-semibold">
-                                <p>{productName} ({quantity||'out of stock'})</p>
+                                <p>{productName} ({quantity})</p>
                                 <p className="text-gray-400 text-base">TK {numberWithCommas(price)}</p>
                             </div>
                             <div className="text-lg font-semibold">
@@ -45,4 +45,4 @@ const Product = ({product}) => {
   )
 }
 
-export default Product
+export default Product;

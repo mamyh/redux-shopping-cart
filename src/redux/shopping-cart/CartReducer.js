@@ -1,53 +1,57 @@
 import { ADDPRODUCTSTOCART, REMOVEPRODUCTSTOCART } from './actionTypes'
 
-const initialCarts =[]
+const initialCarts ={
+  carts:[],
+ 
+}
+
 const CartReducer = (state=initialCarts,{type,payload}) => {
    switch(type){
+   
       case ADDPRODUCTSTOCART:{
-        if(state.length){
-           state.map(item=>{
-            if(item.id === payload.id){
-              return {
-                ...item,
-                price:item.price+payload.price,
-                quantity:item.quantity +1,
-              }
-            }
-            return {
-              ...item
-            }
-           })
-        }else{
-         return  [
-            ...payload,
-          ]
+         let copiedCarts = state.carts.map((cartItem)=>({
+          ...cartItem,
+         }))
+        
+         const itemIndex =copiedCarts.findIndex(cartItem => cartItem.id === payload.id);
+         if(itemIndex > -1){
+            //if item exists in the cart
+            copiedCarts[itemIndex].quantity = copiedCarts[itemIndex].quantity +1;
+            copiedCarts[itemIndex].price = copiedCarts[itemIndex].price + payload.price;
+         }else{
+          //item does not exist
+          copiedCarts.push({...payload,quantity:1});
+         }
+        return{
+          ...state,
+          carts:[...copiedCarts]
         }
-        return ;
+      
       }
       case REMOVEPRODUCTSTOCART:{
-        if(state.length){
-          state.map(item=>{
-           if(item.id === payload.id){
-             return {
-               ...item,
-               price:item.price-payload.price,
-               quantity:item.quantity - 1,
-             }
-           }
-           return {
-             ...item
-           }
-          })
-       }else{
-        return  [
-           {id:payload.id,productName:payload.productName,quantity:0,price:0}
-         ]
-       }
-       return;
+        let copiedCarts = state.carts.map((cartItem)=>({
+          ...cartItem,
+         }))
+        
+         const itemIndex =copiedCarts.findIndex(cartItem => cartItem.id === payload.id);
+         if(itemIndex > -1){
+            //if item exists in the cart
+            copiedCarts[itemIndex].quantity = copiedCarts[itemIndex].quantity - 1;
+            copiedCarts[itemIndex].price = copiedCarts[itemIndex].price - payload.price;
+         }else{
+          //item does not exist
+          copiedCarts.push({...payload,quantity:1});
+         }
+         console.log('copied',copiedCarts)
+        return{
+          ...state,
+          carts:[...copiedCarts]
+        }
+      
       }
     
       default:{
-        return [...state];
+        return {...state};
       }
    }
 }
