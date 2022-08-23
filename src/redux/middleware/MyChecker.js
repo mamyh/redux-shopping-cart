@@ -1,5 +1,5 @@
 import { ADDTOPRODUCTS, REMOVEPRODUCTS } from "../products/actionTypes";
-import {  ADDPRODUCTSTOCART, REMOVEPRODUCTSTOCART } from "../shopping-cart/actionTypes";
+import { ADDPRODUCTSTOCART, REMOVEPRODUCTSTOCART } from "../shopping-cart/actionTypes";
 
 
 
@@ -14,6 +14,9 @@ const MyChecker=(store)=>(next)=>(action)=>{
          return next(action);
       }
       if(action.type === ADDPRODUCTSTOCART ){
+         if(carts.length > 0 && !items(carts,action.payload.id)){
+            return next(action);
+         }
          if(carts.length > 0 && items(carts,action.payload.id).quantity < items(products,action.payload.id).initialQuantity){
             return next(action);
          }

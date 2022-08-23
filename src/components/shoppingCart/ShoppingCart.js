@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux/es/exports';
 
-import TotalPrice from '../../redux/shopping-cart/TotalPrice';
-import TotalProducts from '../../redux/shopping-cart/TotalProducts';
 import Cart from './Cart';
+import TotalPrice from './TotalPrice';
+import TotalProducts from './TotalProducts';
 
 const ShoppingCart = () => {
     const carts= useSelector((state)=>state.CartReducer.carts);
